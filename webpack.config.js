@@ -35,17 +35,18 @@ module.exports = {
                 exclude: /node_modules/,
                 use: 'babel-loader'
             },
+            // Separate css loader to include pure css libraries
+            {
+                test: /\.css$/,
+                loader: isProd
+                    ? ExtractTextPlugin.extract(['css-loader', 'postcss-loader'])
+                    : 'style-loader!css-loader!postcss-loader'
+            },
             {
                 test: /\.styl$/,
-                use: [
-                    ExtractTextPlugin.extract({
-                        fallbackLoader: 'style-loader',     // in dev inline styles for hot change
-                        loader: 'css-loader'
-                    }),
-                    'css-loader',
-                    'postcss-loader',
-                    'stylus-loader'
-                ]
+                loader: isProd
+                    ? ExtractTextPlugin.extract(['css-loader', 'postcss-loader', 'stylus-loader'])
+                    : 'style-loader!css-loader!postcss-loader!stylus-loader'
             }
         ],
     },
@@ -68,10 +69,6 @@ function getPlugins() {
             React: 'react',
             $: 'jquery',
             jQuery: 'jquery'
-        }),
-        new ExtractTextPlugin({
-            filename: 'bundle-[hash].css',
-            allChunks: isProd
         }),
         new webpack.LoaderOptionsPlugin({
             options: {
@@ -107,11 +104,15 @@ function getPlugins() {
     ];
 
     if (isProd) {
-        plugins = plugins.concat([
+        plugins.push(
             new webpack.DefinePlugin({
                 'process.env': {
                     'NODE_ENV': JSON.stringify('production')
                 }
+            }),
+            new ExtractTextPlugin({
+                filename: 'bundle-[hash].css',
+                allChunks: true
             }),
             new webpack.optimize.UglifyJsPlugin({
                 compress: {
@@ -122,7 +123,7 @@ function getPlugins() {
                 sourceMap: false
             }),
             new ManifestPlugin()
-        ]);
+        );
     } else {
         plugins.push(
             new webpack.HotModuleReplacementPlugin(),

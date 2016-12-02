@@ -13,3 +13,15 @@
 Webpack in `webpack.config.js` uses separate babel config with disabled modules, so webpack can handle natively all `import`, `exports` to enable Tree Shaking for minimal bundle size.
 
 Also there is no need to write `import React from 'react'` in every `*.jsx` file thanks to babel's `react-require` plugin.
+
+## How
+For production build (node start slow first time to compile JSX):
+```
+npm run build
+NODE_ENV=production node src/back/server.js
+```
+
+For development (HMR and staff):
+```
+npm run dev
+```
