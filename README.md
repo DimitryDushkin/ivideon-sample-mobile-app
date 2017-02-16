@@ -17,7 +17,7 @@ For production build (node start slow first time to compile JSX):
 ```
 yarn
 npm run build
-NODE_ENV=production node src/back/server.js
+NODE_ENV=production node src/server/server.js
 ```
 
 For development (HMR and staff):

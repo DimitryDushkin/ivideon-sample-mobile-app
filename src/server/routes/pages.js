@@ -6,16 +6,17 @@ const router = require('express').Router(),
 
     errorHandler = require('../utils/express-utils').errorHandler,
     config = require('../config'),
-    layout = require('../layout');
+    layout = require('../layout'),
+    rootComponentPath = '../../front/blocks/root/root.jsx';
 
-var Root = require('../../blocks/root/root.jsx').default;
+var Root = require(rootComponentPath).default;
 
 router.get('*', (req, res) => {
     if (config.isDevelopment) {
         var decache = require('decache');
-        decache('../client/blocks/Root/Root.jsx');
+        decache(rootComponentPath);
 
-        Root = require('../../blocks/root/root.jsx').default;
+        Root = require(rootComponentPath).default;
     }
 
     const store = { getState() { return {}; }},

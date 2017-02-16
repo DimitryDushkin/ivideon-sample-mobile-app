@@ -22,7 +22,10 @@
     "helmet": "^3.4.0",
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
+    "react-redux": "^5.0.2",
     "react-router": "^3.0.2",
+    "redux": "^3.6.0",
+    "redux-thunk": "^2.2.0",
     "uuid": "^3.0.1"
   },
   "devDependencies": {
@@ -44,9 +47,9 @@
     "webpack-plugin-manifest": "^1.0.1"
   },
   "scripts": {
-    "dev": "nodemon src/back/server.js --watch src/back --delay 1",
+    "dev": "nodemon src/server/server.js --watch src/server --delay 1",
     "build": "NODE_ENV=production webpack -p",
-    "testing": "NODE_ENV=production nodemon src/back/server.js --watch src/client --watch src/back --delay 1",
+    "testing": "NODE_ENV=production nodemon src/server/server.js --watch src/client --watch src/server --delay 1",
     "release": "node src/generate-changelog.js"
   }
 }
