@@ -77,9 +77,13 @@ function getPlugins() {
                     plugins: [ require('autoprefixer') ]
                 },
                 babel: {
-                    babelrc: false,
                     'presets': [
-                        ['es2015', { 'modules': false }],
+                        ['env', {
+                            'targets': {
+                                'browsers': ['last 2 versions', 'ie >= 11']
+                            },
+                            'modules': false
+                        }],
                         'react'
                     ],
                     'plugins': [

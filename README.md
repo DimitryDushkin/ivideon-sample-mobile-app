@@ -8,8 +8,6 @@
  * webpack manifest for production builds hashing
  * Stylus + autoprefixer
 
-`babel-register` uses `.babelrc` with modules enabled, because it's not compiled via webpack 2.
-
 Webpack in `webpack.config.js` uses separate babel config with disabled modules, so webpack can handle natively all `import`, `exports` to enable Tree Shaking for minimal bundle size.
 
 Also there is no need to write `import React from 'react'` in every `*.jsx` file thanks to babel's `react-require` plugin.
@@ -17,6 +15,7 @@ Also there is no need to write `import React from 'react'` in every `*.jsx` file
 ## How
 For production build (node start slow first time to compile JSX):
 ```
+yarn
 npm run build
 NODE_ENV=production node src/back/server.js
 ```

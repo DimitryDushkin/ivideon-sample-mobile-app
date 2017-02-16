@@ -2,10 +2,9 @@ const config = require('./config'),
     fs = require('fs'),
     path = require('path'),
     isDevelopment = config.isDevelopment,
-    assetsManifest = JSON.parse(fs.readFileSync(path.resolve(__dirname + '/../../public/webpack-manifest.json'), 'utf-8')),
-    iconsHtml = ''; //fs.readFileSync(path.resolve(__dirname + '/../client/blocks/Icons/Icons.html'), 'utf-8');
+    assetsManifest =  !isDevelopment && JSON.parse(fs.readFileSync(path.resolve(__dirname + '/../../public/webpack-manifest.json'), 'utf-8'));
 
-module.exports = function(content, state, res) {
+module.exports = function(content, state) {
 
     return `
     <!DOCTYPE html>
@@ -33,7 +32,6 @@ module.exports = function(content, state, res) {
                 ? '/bundle.js'
                 : assetsManifest['main.js']
             }"></script>
-        ${iconsHtml}
     </body>
 
     </html>`;
