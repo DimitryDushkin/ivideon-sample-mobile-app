@@ -20,6 +20,7 @@
     "cookie-parser": "^1.4.3",
     "express": "^4.14.1",
     "helmet": "^3.4.0",
+    "normalizr": "^3.2.1",
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
     "react-redux": "^5.0.2",
