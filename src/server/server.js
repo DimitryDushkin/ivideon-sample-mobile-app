@@ -6,10 +6,7 @@ const fs = require('fs'),
     express = require('express'),
     app = express(),
     compression = require('compression'),
-    cookieParser = require('cookie-parser'),
     bodyParser = require('body-parser'),
-    helmet = require('helmet'),
-    uuid = require('uuid'),
 
     config = require('./config'),
     routerPages = require('./routes/pages');
@@ -19,7 +16,6 @@ app.use('/ping', (req, res) => res.send('i\'m alive'));
 if (config.isDevelopment) {
     // add webpack hot reloading
     require('./utils/webpack-dev-middleware')(app);
-    // require('./utils/dev-https')(app);
 } else {
     app.use(compression());
 }

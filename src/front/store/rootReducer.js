@@ -4,8 +4,8 @@ import { combineReducers } from 'redux';
  * @typedef {Object} Camera
  * @property {String} camera – id of camera
  * @property {String} server
- * @property {String} name
- * @property {Number} total_views
+ * @property {String} link_text
+ * @property {Number} views
  */
 
 /**

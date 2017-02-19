@@ -1,5 +1,14 @@
+import { Provider } from 'react-redux'
+
+import setupStore from '../../store/setupStore';
 import './root.styl';
 
-export default function Root() {
-    return <div>Root component</div>;
+const isBrowser = typeof window !== 'undefined';
+
+export default function Root({ store }) {
+    const initedStore = isBrowser ? setupStore(window.appState) : store;
+
+    return <Provider store={ initedStore }>
+        <div className='root'>Root compoentn</div>
+    </Provider>;
 }

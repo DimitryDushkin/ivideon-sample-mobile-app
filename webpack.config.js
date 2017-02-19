@@ -7,20 +7,14 @@ const path = require('path'),
 
 module.exports = {
     entry: (function() {
-        // Polyfills
-        var entries = [
+        const entries = [
             'core-js/es6/symbol',
-            // 'whatwg-fetch'
+            './src/front/index.jsx'
         ];
 
         if (!isProd) {
-            entries.push('react-hot-loader/patch');
-            entries.push('webpack/hot/dev-server');
-            entries.push('webpack-hot-middleware/client');
+            entries.unshift('react-hot-loader/patch');
         }
-
-        entries.push('./src/front/index.jsx');
-
         return entries;
     })(),
     output: {
@@ -33,7 +27,9 @@ module.exports = {
             {
                 test: /\.(js|jsx)$/,
                 exclude: /node_modules/,
-                use: 'babel-loader'
+                use: isProd
+                    ? 'babel-loader'
+                    : ['react-hot-loader/webpack', 'babel-loader']
             },
             // Separate css loader to include pure css libraries
             {
@@ -54,10 +50,8 @@ module.exports = {
     devtool: isProd ? '' : '#eval',
     devServer: {
         contentBase: publicFolder,
-        historyApiFallback: true,
-        hot: true,
-        inline: true,
-        progress: true
+        compress: true,
+        hot: true
     }
 };
 
@@ -97,9 +91,6 @@ function getPlugins() {
                                 'transform-react-inline-elements',
                                 'transform-react-remove-prop-types'
                             ]
-                        },
-                        'development': {
-                            'plugins': [ 'react-hot-loader/babel' ]
                         }
                     }
                 }

@@ -7,22 +7,24 @@ const router = require('express').Router(),
     errorHandler = require('../utils/express-utils').errorHandler,
     config = require('../config'),
     layout = require('../layout'),
-    rootComponentPath = '../../front/blocks/root/root.jsx';
+    rootComponentPath = '../../front/blocks/root/root.jsx',
+    setupStorePath = '../../front/store/setupStore.js';
 
-var Root = require(rootComponentPath).default;
+var Root = require(rootComponentPath).default,
+    setupStore = require(setupStorePath).default;
 
 router.get('*', (req, res) => {
     if (config.isDevelopment) {
         var decache = require('decache');
         decache(rootComponentPath);
+        decache(setupStorePath);
 
         Root = require(rootComponentPath).default;
+        setupStore = require(setupStorePath).default;
     }
 
-    const store = { getState() { return {}; }},
-        content = ReactDOMServer.renderToString(
-            React.createElement(Root, null)
-        );
+    const store = setupStore({}),
+        content = ReactDOMServer.renderToString(<Root store={ store} />);
 
     res.send(layout(content, store.getState(), res));
 });
