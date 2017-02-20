@@ -4,6 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
+    "axios": "^0.15.3",
     "babel-core": "^6.23.1",
     "babel-loader": "^6.3.2",
     "babel-plugin-react-require": "^3.0.0",
@@ -20,6 +21,7 @@
     "cookie-parser": "^1.4.3",
     "express": "^4.14.1",
     "helmet": "^3.4.0",
+    "lodash": "^4.17.4",
     "normalizr": "^3.2.1",
     "react": "^15.4.2",
     "react-dom": "^15.4.2",

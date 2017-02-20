@@ -6,5 +6,4 @@ public/webpack-manifest.json
 ._.DS_Store
 .idea/*
 .babel-cache.json
-yarn.lock
 npm-debug.log

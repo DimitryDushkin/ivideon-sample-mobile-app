@@ -9,7 +9,7 @@ module.exports = {
     entry: (function() {
         const entries = [
             'core-js/es6/symbol',
-            './src/front/index.jsx'
+            './src/front/index.js'
         ];
 
         if (!isProd) {

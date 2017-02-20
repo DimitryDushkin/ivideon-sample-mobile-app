@@ -7,7 +7,7 @@ const router = require('express').Router(),
     errorHandler = require('../utils/express-utils').errorHandler,
     config = require('../config'),
     layout = require('../layout'),
-    rootComponentPath = '../../front/blocks/root/root.jsx',
+    rootComponentPath = '../../front/blocks/root/root.js',
     setupStorePath = '../../front/store/setupStore.js';
 
 var Root = require(rootComponentPath).default,
