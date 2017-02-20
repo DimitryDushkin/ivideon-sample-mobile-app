@@ -1,26 +1,30 @@
-## Tech
+## What's that
+Sample mobile web app rendering public-avaliable cameras using [https://ivideon.com](Ivideon) API.
 
- * Webpack 2
- * Express 4 + webpack dev server hot reload
- * React 15.4 (+ some babel optimizations including `transform-runtime`)
- * React hot module reload (including server-side thanks to decache in dev mode)
- * Server-side rendering (thanks to babel-register)
+## What's done
+ * React 15.x + Redux 5.x
+ * Data from API normalized using [https://github.com/paularmstrong/normalizr/](normalizer) to prevent camera duplicates
+ * Bundled by webpack 2 (+ tree shaking to reduce bundle size)
+ * Babel configured to transpile code based on set of targeted browsers (via [https://github.com/babel/babel-preset-env](babel-preset-env))
+ * Webpack dev server hot reload
  * webpack manifest for production builds hashing
  * Stylus + autoprefixer
+ 
+## What's can be done
+ * Server-side rendering
+ * Split `bundle.js` to vendor components and custom
+ * Speed up cameras' list rendering using [https://github.com/seatgeek/react-infinite](react-infinite)
+ * Switch to `preact` (3 Kb) to reduce bundle size or `inferno` (9 Kb) to speed rendering up to 2-3x. `react`'s size is 45 Kb minified and gziped.
+ * Content security policy setup via [https://github.com/helmetjs/helmet](helmet).
 
-Webpack in `webpack.config.js` uses separate babel config with disabled modules, so webpack can handle natively all `import`, `exports` to enable Tree Shaking for minimal bundle size.
 
-Also there is no need to write `import React from 'react'` in every `*.jsx` file thanks to babel's `react-require` plugin.
+## Tips
+There is no need to write `import React from 'react'` in every `*.js` file thanks to babel's `react-require` plugin.
 
-## How
+## How to start
 For production build (node start slow first time to compile JSX):
 ```
-yarn
-npm run build
-NODE_ENV=production node src/server/server.js
-```
-
-For development (HMR and staff):
-```
-npm run dev
+yarn           # or npm i
+yarn run dev   # or npm run dev
+open http://localhost:8080
 ```

@@ -13,7 +13,7 @@ import {
  * @property {String} uid — id
  * @property {String} camera
  * @property {String} server
- * @property {String} link_text
+ * @property {String} camera_name
  * @property {Number} views
  */
 

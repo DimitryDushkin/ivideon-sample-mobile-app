@@ -1,5 +1,7 @@
 import { PropTypes } from 'react';
 
+import ButtonFavorite from '../button-favorite/button-favorite';
+
 import './camera.styl';
 
 export default function Camera({ data }) {
@@ -9,6 +11,9 @@ export default function Camera({ data }) {
         </div>
         <div className='camera__content'>
             { data.camera_name }
+            <div className="camera__favorite">
+                <ButtonFavorite isChecked={ false } onClick={ () => {} } />
+            </div>
         </div>
     </li>
 }

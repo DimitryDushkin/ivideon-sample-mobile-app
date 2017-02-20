@@ -36,13 +36,13 @@ module.exports = {
                 test: /\.css$/,
                 loader: isProd
                     ? ExtractTextPlugin.extract(['css-loader', 'postcss-loader'])
-                    : 'style-loader!css-loader!postcss-loader'
+                    : 'style-loader!css-loader'
             },
             {
                 test: /\.styl$/,
                 loader: isProd
                     ? ExtractTextPlugin.extract(['css-loader', 'postcss-loader', 'stylus-loader'])
-                    : 'style-loader!css-loader!postcss-loader!stylus-loader'
+                    : 'style-loader!css-loader!stylus-loader'
             }
         ],
     },
