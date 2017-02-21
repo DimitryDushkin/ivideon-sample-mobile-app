@@ -1,6 +1,23 @@
+aspect-ratio($width, $height)
+    position relative
+    height: auto
+
+    &:before
+        display: block
+        content ""
+        width 100%
+        padding-top ($height / $width) * 100%
+
+    & > .camera__photo-img
+        display block
+        position absolute
+        top 0
+        left 0
+        right 0
+        bottom 0
+
 .camera
     display flex
-    height 140px
     border 1px solid #9B9B9B
     border-bottom none
 
@@ -8,14 +25,16 @@
         border-bottom 1px solid #9B9B9B
 
     &__photo
-        height 100%
+        aspect-ratio(4, 3)
         width 40%
         min-width 40%
+        position relative
+        border-right 1px solid #9B9B9B
 
-        img
-            width 100%
-            height 100%
-            object-fit cover
+    &__photo-img
+        background-repeat no-repeat
+        background-position center center
+        background-size cover
 
     &__content
         margin 16px
@@ -30,9 +49,32 @@
 
     &__content-footer
         color #B8B8B8
+        font-size 12px
 
     &__name
-        font-size 16px
+        font-size 14px
         color #246BCD
-        margin-right 16px
+        margin-right 8px
         line-height 1.3em
+
+    &_selected
+        flex-direction column
+        height 300px
+
+        .camera__photo
+            width 100%
+            height 200px
+
+        .camera__content
+            height 100px
+
+    &__close
+        position absolute
+        top 16px
+        left 16px
+        color #fff
+        z-index 1
+
+        svg
+            width 32px
+            height 32px

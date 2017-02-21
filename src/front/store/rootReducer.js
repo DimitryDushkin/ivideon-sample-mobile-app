@@ -1,11 +1,12 @@
 import { combineReducers } from 'redux';
+import union from 'lodash/union';
 
 import {
+    FETCH_PAGE_REQUEST,
     FETCH_PAGE_SUCCESS,
-    SET_SELECTED_CAMERA_ID,
-    UNSET_SELECTED_CAMERA_ID,
-    ADD_FAVORITE_CAMERA_ID,
-    REMOVE_FAVORITE_CAMERA_ID
+    FETCH_PAGE_ERROR,
+    TOGGLE_SELECTED_CAMERA_ID,
+    TOGGLE_FAVORITE_CAMERA_ID
 } from './actions';
 
 /**
@@ -17,7 +18,7 @@ import {
 
 /**
  * @typedef {Object} Camera
- * @property {String} uid — id
+ * @property {String} uin — id
  * @property {String} camera
  * @property {String} server
  * @property {String} camera_name
@@ -25,12 +26,13 @@ import {
  */
 
 export default combineReducers({
-    camerasIdsList: (camerasIdsList = [], action) => {
+    camerasIdsOnPage: (camerasIdsOnPage = [], action) => {
         if (action.type === FETCH_PAGE_SUCCESS) {
-            return camerasIdsList.concat(getPageFromPayload(action.payload).cameras);
+            // for uniq items on page
+            return union(camerasIdsOnPage, getPageFromPayload(action.payload).cameras);
         }
 
-        return camerasIdsList;
+        return camerasIdsOnPage;
     },
     nextPageId: (nextPageId = '', action) => {
         if (action.type === FETCH_PAGE_SUCCESS) {
@@ -46,27 +48,39 @@ export default combineReducers({
 
         return camerasById;
     },
-    selectedCameraId: (selectedCameraId = '', action) => {
-        if (action.type === SET_SELECTED_CAMERA_ID) {
+    selectedCameraUin: (selectedCameraUin = '', action) => {
+        if (action.type === TOGGLE_SELECTED_CAMERA_ID) {
+            if (selectedCameraUin === action.payload.uin) {
+                return '';
+            } else {
+                return action.payload.uin;
+            }
+        }
+        return selectedCameraUin;
+    },
+    favoriteCamerasIds: (favoriteCamerasIds = [], action) => {
+        if (action.type === TOGGLE_FAVORITE_CAMERA_ID) {
+            if (favoriteCamerasIds.indexOf(action.payload.uin) > -1) {
+                return favoriteCamerasIds.filter(id => id !== action.payload.uin)
+            } else {
+                return favoriteCamerasIds.concat(action.payload.uin);
+            }
+        }
+        return favoriteCamerasIds;
+    },
+    isListLoading: (isListLoading = false, action) => {
+        if (action.type === FETCH_PAGE_REQUEST) {
+            return true;
+        }
+
+        return false;
+    },
+    listLoadingError: (listLoadingError = '', action) => {
+        if (action.type === FETCH_PAGE_ERROR) {
             return action.payload;
         }
 
-        if (action.type === UNSET_SELECTED_CAMERA_ID) {
-            return '';
-        }
-
-        return selectedCameraId;
-    },
-    favoriteCamerasIds: (favoriteCamerasIds = [], action) => {
-        if (action.type === ADD_FAVORITE_CAMERA_ID) {
-            return favoriteCamerasIds.concat(action.payload);
-        }
-
-        if (action.type === REMOVE_FAVORITE_CAMERA_ID) {
-            return favoriteCamerasIds.filter(id => id !== action.payload);
-        }
-
-        return favoriteCamerasIds;
+        return '';
     }
 });
 

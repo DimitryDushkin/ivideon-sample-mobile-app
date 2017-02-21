@@ -6,31 +6,62 @@ import * as schema from './schema';
 export const FETCH_PAGE_REQUEST = 'FETCH_PAGE_REQUEST';
 export const FETCH_PAGE_SUCCESS = 'FETCH_PAGE_SUCCESS';
 export const FETCH_PAGE_ERROR = 'FETCH_PAGE_ERROR';
-export const SET_SELECTED_CAMERA_ID = 'SET_SELECTED_CAMERA_ID';
-export const UNSET_SELECTED_CAMERA_ID = 'UNSET_SELECTED_CAMERA_ID';
-export const ADD_FAVORITE_CAMERA_ID = 'ADD_FAVORITE_CAMERA_ID';
-export const REMOVE_FAVORITE_CAMERA_ID = 'REMOVE_FAVORITE_CAMERA_ID';
+export const TOGGLE_SELECTED_CAMERA_ID = 'TOGGLE_SELECTED_CAMERA_ID';
+export const TOGGLE_FAVORITE_CAMERA_ID = 'TOGGLE_FAVORITE_CAMERA_ID';
 
-export const fetchPage = (id) => {
+export const fetchPage = () => {
     return dispatch => {
         dispatch({ type: FETCH_PAGE_REQUEST });
 
         axios
-            .get(`http://api.ivideon.com/tv/cameras?limit=10${ id ? '&seed=' + id : '' }`)
+            .get('http://api.ivideon.com/tv/cameras?limit=10')
             .then(
-                res => {
-                    const page = {
-                        id: res.data.response.seeds.this,
-                        next_page_id: res.data.response.seeds.next,
-                        cameras: res.data.response.cameras
-                    };
-
-                    dispatch({
-                        type: FETCH_PAGE_SUCCESS,
-                        payload: normalize(page, schema.page)
-                    })
-                },
-                err => dispatch({ type: FETCH_PAGE_ERROR, payload: err })
+                handleSuccessResponse(dispatch),
+                handleErrorResponse(dispatch)
             );
     }
+}
+
+export const fetchNextPage = () => {
+    return (dispatch, getState) => {
+        const { nextPageId } = getState();
+
+        dispatch({ type: FETCH_PAGE_REQUEST });
+
+        axios
+            .get(`http://api.ivideon.com/tv/cameras?limit=10&seed=${nextPageId}`)
+            .then(
+                handleSuccessResponse(dispatch),
+                handleErrorResponse(dispatch)
+            );
+    }
+}
+
+export const toggleFavorite = (camera) => {
+    return { type: TOGGLE_FAVORITE_CAMERA_ID, payload: camera };
+}
+
+export const toggleSelected = (camera) => {
+    return { type: TOGGLE_SELECTED_CAMERA_ID, payload: camera };
+}
+
+function handleSuccessResponse(dispatch) {
+    return (res) => {
+        const page = {
+            id: res.data.response.seeds.this,
+            next_page_id: res.data.response.seeds.next,
+            cameras: res.data.response.cameras
+        };
+
+        dispatch({
+            type: FETCH_PAGE_SUCCESS,
+            payload: normalize(page, schema.page)
+        });
+    }
+}
+
+function handleErrorResponse(dispatch) {
+    return (err) => {
+        dispatch({ type: FETCH_PAGE_ERROR, payload: err })
+    };
 }

@@ -11,6 +11,7 @@ Sample mobile web app rendering public-avaliable cameras using [https://ivideon.
  * Stylus + autoprefixer
  
 ## What's can be done
+ * Unit-testing
  * Server-side rendering
  * Split `bundle.js` to vendor components and custom
  * Speed up cameras' list rendering using [https://github.com/seatgeek/react-infinite](react-infinite)
