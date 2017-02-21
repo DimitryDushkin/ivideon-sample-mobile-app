@@ -9,12 +9,14 @@ export const FETCH_PAGE_ERROR = 'FETCH_PAGE_ERROR';
 export const TOGGLE_SELECTED_CAMERA_ID = 'TOGGLE_SELECTED_CAMERA_ID';
 export const TOGGLE_FAVORITE_CAMERA_ID = 'TOGGLE_FAVORITE_CAMERA_ID';
 
+const API = 'https://api.ivideon.com/tv/cameras';
+
 export const fetchPage = () => {
     return dispatch => {
         dispatch({ type: FETCH_PAGE_REQUEST });
 
         axios
-            .get('http://api.ivideon.com/tv/cameras?limit=10')
+            .get(`${API}?limit=10`)
             .then(
                 handleSuccessResponse(dispatch),
                 handleErrorResponse(dispatch)
@@ -29,7 +31,7 @@ export const fetchNextPage = () => {
         dispatch({ type: FETCH_PAGE_REQUEST });
 
         axios
-            .get(`http://api.ivideon.com/tv/cameras?limit=10&seed=${nextPageId}`)
+            .get(`${API}?limit=10&seed=${nextPageId}`)
             .then(
                 handleSuccessResponse(dispatch),
                 handleErrorResponse(dispatch)
