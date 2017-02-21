@@ -9,6 +9,13 @@ import {
 } from './actions';
 
 /**
+ * @typedef {Object} Page
+ * @property {Camera[]} cameras
+ * @property {String} id
+ * @property {String} next_page_id
+ */
+
+/**
  * @typedef {Object} Camera
  * @property {String} uid — id
  * @property {String} camera
@@ -17,35 +24,27 @@ import {
  * @property {Number} views
  */
 
-/**
- * @typedef {Object} Page
- * @property {String} id
- * @property {String} next_page_id
- * @property {Array<Camera>} cameras
- */
-
-/**
- * @typedef {Object} StorePages
- * @property {Array<String>} result
- * @property {Object.<string, Page>} entities – key is id of page
- */
-
-/** @type {StorePages} **/
-const initialPages = {
-    result: [],
-    entities: {}
-};
-
 export default combineReducers({
-    pages: (pages = initialPages, action) => {
+    camerasIdsList: (camerasIdsList = [], action) => {
         if (action.type === FETCH_PAGE_SUCCESS) {
-            return {
-                result: pages.result.concat(action.payload.result),
-                entities: Object.assign({}, pages.entities, action.payload.entities)
-            };
+            return camerasIdsList.concat(getPageFromPayload(action.payload).cameras);
         }
 
-        return pages;
+        return camerasIdsList;
+    },
+    nextPageId: (nextPageId = '', action) => {
+        if (action.type === FETCH_PAGE_SUCCESS) {
+            return getPageFromPayload(action.payload).next_page_id;
+        }
+
+        return nextPageId;
+    },
+    camerasById: (camerasById = {}, action) => {
+        if (action.type === FETCH_PAGE_SUCCESS) {
+            return Object.assign({}, camerasById, action.payload.entities.cameras);
+        }
+
+        return camerasById;
     },
     selectedCameraId: (selectedCameraId = '', action) => {
         if (action.type === SET_SELECTED_CAMERA_ID) {
@@ -70,3 +69,12 @@ export default combineReducers({
         return favoriteCamerasIds;
     }
 });
+
+/**
+ *
+ * @param {Object} payload
+ * @return {Page}
+ */
+function getPageFromPayload(payload) {
+    return payload.entities.pages[payload.result];
+}

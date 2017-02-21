@@ -10,14 +10,21 @@ export default function Camera({ data }) {
             <img src={ `https://streaming.ivideon.com/preview/live?server=${data.server}&camera=${data.camera}` } />
         </div>
         <div className='camera__content'>
-            { data.camera_name }
-            <div className="camera__favorite">
-                <ButtonFavorite isChecked={ false } onClick={ () => {} } />
+            <div className='camera__content-header'>
+                <div className='camera__name'>
+                    { data.camera_name }
+                </div>
+                <div className='camera__favorite'>
+                    <ButtonFavorite isChecked={ false } onClick={ () => {} } />
+                </div>
+            </div>
+            <div className='camera__content-footer'>
+                Total views: { data.views }
             </div>
         </div>
     </li>
 }
 
 Camera.propTypes = {
-    data: PropTypes.object
+    data: PropTypes.object.isRequired
 };

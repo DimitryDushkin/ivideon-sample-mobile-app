@@ -1,12 +1,38 @@
 .camera
     display flex
     height 140px
+    border 1px solid #9B9B9B
+    border-bottom none
+
+    &:last-of-type
+        border-bottom 1px solid #9B9B9B
 
     &__photo
         height 100%
-        width 33%
+        width 40%
+        min-width 40%
 
         img
             width 100%
             height 100%
             object-fit cover
+
+    &__content
+        margin 16px
+        flex 1
+        display flex
+        flex-direction column
+        justify-content space-between
+
+    &__content-header
+        display flex
+        justify-content space-between
+
+    &__content-footer
+        color #B8B8B8
+
+    &__name
+        font-size 16px
+        color #246BCD
+        margin-right 16px
+        line-height 1.3em

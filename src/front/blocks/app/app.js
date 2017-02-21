@@ -9,39 +9,32 @@ import { fetchPage } from '../../store/actions';
 
 import './app.styl';
 
-const fetchFirstPage = once((dispatch) => dispatch(fetchPage()));
+const fetchFirstPageOnce = once((dispatch) => dispatch(fetchPage()));
 
-function App({ pages, fetchFirstPage }) {
-    const entities = pages.entities;
-
-    fetchFirstPage();
+function App({ camerasIdsList, camerasById, fetchFirstPageOnce }) {
+    fetchFirstPageOnce();   // executes only once, can be replaced by stateful component
 
     return <div className='app'>
-        {
-            pages.result.map(pageId =>
-                <List>
-                    {
-                        entities
-                            .pages[pageId]
-                            .cameras
-                            .map(cameraId => <Camera data={ entities.cameras[cameraId] } />)
-                    }
-                </List>
-            )
-        }
+        <List>
+            {
+                camerasIdsList.map(cameraId => <Camera key={ cameraId } data={ camerasById[cameraId] } />)
+            }
+        </List>
     </div>
 }
 
 App.propTypes = {
-    pages: PropTypes.array,
-    fetchFirstPage: PropTypes.func.isRequired
+    camerasIdsList: PropTypes.array.isRequired,
+    camerasById: PropTypes.object.isRequired,
+    fetchFirstPageOnce: PropTypes.func.isRequired
 };
 
 export default connect(
     (state) => ({
-        pages: state.pages
+        camerasIdsList: state.camerasIdsList,
+        camerasById: state.camerasById
     }),
     (dispatch) => ({
-        fetchFirstPage: () => fetchFirstPage(dispatch)
+        fetchFirstPageOnce: () => fetchFirstPageOnce(dispatch)
     })
 )(App);
