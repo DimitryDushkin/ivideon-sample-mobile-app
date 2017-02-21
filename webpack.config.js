@@ -20,7 +20,7 @@ module.exports = {
     output: {
         path: publicFolder,
         publicPath: '/',
-        filename: isProd ? 'bundle-[hash].js' : 'bundle.js'
+        filename: isProd ? 'bundle.js' : 'bundle.js'
     },
     module: {
         rules: [
@@ -47,7 +47,7 @@ module.exports = {
         ],
     },
     plugins: getPlugins(),
-    devtool: isProd ? '' : '#eval',
+    devtool: isProd ? 'source-map' : '#eval',
     devServer: {
         contentBase: publicFolder,
         compress: true,
@@ -106,18 +106,10 @@ function getPlugins() {
                 }
             }),
             new ExtractTextPlugin({
-                filename: 'bundle-[hash].css',
+                filename: 'bundle.css',
                 allChunks: true
-            }),
-            new webpack.optimize.UglifyJsPlugin({
-                compress: {
-                    warnings: false,
-                    screw_ie8: true
-                },
-                comments: false,
-                sourceMap: false
-            }),
-            new ManifestPlugin()
+            })
+            //new ManifestPlugin()
         );
     } else {
         plugins.push(

@@ -1,6 +1,4 @@
 node_modules
-public/bundle*
-public/1.*
 public/webpack-manifest.json
 .DS_Store
 ._.DS_Store
