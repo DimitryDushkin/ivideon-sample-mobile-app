@@ -4,6 +4,7 @@ Sample mobile web app rendering public-avaliable cameras using [https://ivideon.
 App is here — https://dimitrydushkin.github.io/ivideon-sample-mobile-app/public/.
 
 ## What's done
+ * Mobile-first adaptive layout
  * React 15.x + Redux 5.x
  * Data from API normalized using [https://github.com/paularmstrong/normalizr/](normalizer) to prevent camera duplicates
  * Bundled by webpack 2 (+ tree shaking to reduce bundle size)
