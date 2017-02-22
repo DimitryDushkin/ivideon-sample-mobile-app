@@ -1,7 +1,7 @@
 const STORAGE_KEY = 'favoriteCameras';
 
 /**
- *
+ * @TODO: use normilizr
  * @return {Array}
  */
 export const getFavoriteCamerasIds = () => {
@@ -10,7 +10,7 @@ export const getFavoriteCamerasIds = () => {
 }
 
 /**
- *
+ * @TODO: use normilizr
  * @return {Object}
  */
 export const getFavoriteCamerasEntities = () => {

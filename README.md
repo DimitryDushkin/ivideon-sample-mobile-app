@@ -11,6 +11,7 @@ Sample mobile web app rendering public-avaliable cameras using [https://ivideon.
  * Stylus + autoprefixer
  
 ## What's can be done
+ * Refresh selected camera every 10 seconds via redux middleware
  * Unit-testing
  * Server-side rendering
  * Split `bundle.js` to vendor components and custom
