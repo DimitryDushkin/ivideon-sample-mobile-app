@@ -8,6 +8,7 @@ import {
     TOGGLE_SELECTED_CAMERA_ID,
     TOGGLE_FAVORITE_CAMERA_ID
 } from './actions';
+import { getFavoriteCamerasEntities, getFavoriteCamerasIds } from './localStoreFavoriteCameras';
 
 /**
  * @typedef {Object} Page
@@ -41,7 +42,7 @@ export default combineReducers({
 
         return nextPageId;
     },
-    camerasById: (camerasById = {}, action) => {
+    camerasById: (camerasById = getFavoriteCamerasEntities(), action) => {
         if (action.type === FETCH_PAGE_SUCCESS) {
             return Object.assign({}, camerasById, action.payload.entities.cameras);
         }
@@ -58,7 +59,7 @@ export default combineReducers({
         }
         return selectedCameraUin;
     },
-    favoriteCamerasIds: (favoriteCamerasIds = [], action) => {
+    favoriteCamerasIds: (favoriteCamerasIds = getFavoriteCamerasIds(), action) => {
         if (action.type === TOGGLE_FAVORITE_CAMERA_ID) {
             if (favoriteCamerasIds.indexOf(action.payload.uin) > -1) {
                 return favoriteCamerasIds.filter(id => id !== action.payload.uin)
@@ -66,6 +67,7 @@ export default combineReducers({
                 return favoriteCamerasIds.concat(action.payload.uin);
             }
         }
+
         return favoriteCamerasIds;
     },
     isListLoading: (isListLoading = false, action) => {

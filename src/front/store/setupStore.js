@@ -2,6 +2,7 @@ import { createStore, applyMiddleware, compose } from 'redux';
 import thunkMiddleware from 'redux-thunk';
 
 import rootReducer from './rootReducer.js';
+import { saveFavoriteCamerasMiddleware } from './localStoreFavoriteCameras';
 
 /**
  *
@@ -17,7 +18,7 @@ export default function setupStore(initialState) {
             rootReducer,
             initialState,
             compose(        // middlewares
-                applyMiddleware(thunkMiddleware),
+                applyMiddleware(thunkMiddleware, saveFavoriteCamerasMiddleware),
                 chromeReduxExtension
             )
         );
